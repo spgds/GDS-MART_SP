@@ -1,0 +1,24 @@
+formula : USE MEASURE 
+
+1-total_order_lines = count(fact_order_lines[order_id])
+
+2:LIFR % = calculate(sum(fact_order_lines[In Full]),fact_order_lines[In Full]=1)/([total_order_lines])
+
+
+3: total_order_quantity = sum(fact_order_lines[order_qty])
+toatl_shipped_quantity = sum(fact_order_lines[delivery_qty])
+VOFR% = [toatl_shipped_quantity]/[total_order_quantity]
+
+4:Total Orders = count(fact_orders_aggregate[order_id])
+
+5:OT %=CALCULATE(sum(fact_orders_aggregate[on_time]),fact_orders_aggregate[on_time]=1)/[Total Orders]
+
+6:IF% = CALCULATE(SUM(fact_orders_aggregate[in_full]),fact_orders_aggregate[in_full]=1)/[Total Orders]
+
+7:OTIF % = CALCULATE(SUM(fact_orders_aggregate[otif]),fact_orders_aggregate[otif]=1)/[Total Orders]
+
+8:On Time Target = AVERAGE(dim_targets_orders[ontime_target%])
+
+9:In Full Target = AVERAGE(dim_targets_orders[infull_target%])
+
+10:On Time In Full Target = AVERAGE(dim_targets_orders[otif_target%])
